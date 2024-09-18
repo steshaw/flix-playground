@@ -3,14 +3,17 @@ def main(): Unit \ IO =
     match args {
         case Nil => println("Missing argument: filename")
         case file :: _ =>
-            match Files.readLines(file) {
-                case Err(_) =>
-                    println("Unable to read: ${file}")
-                case Ok(lines) =>
-                    let totalLines = List.length(lines);
-                    let totalWords = List.sumWith(numberOfWords, lines);
-                    println("Lines: ${totalLines}, Words: ${totalWords}")
-            }
+            count(file)
+    }
+
+def count(file: String) : Unit \ IO =
+    match Files.readLines(file) {
+        case Err(_) =>
+            println("Unable to read: ${file}")
+        case Ok(lines) =>
+            let totalLines = List.length(lines);
+            let totalWords = List.sumWith(numberOfWords, lines);
+            println("Lines: ${totalLines}, Words: ${totalWords}")
     }
 
 def numberOfWords(s: String): Int32 =
