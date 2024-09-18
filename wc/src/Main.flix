@@ -7,14 +7,18 @@ def main(): Unit \ IO =
     }
 
 def count(file: String) : Unit \ IO =
-    match Files.readLines(file) {
-        case Err(_) =>
-            println("Unable to read: ${file}")
-        case Ok(lines) =>
-            let totalLines = List.length(lines);
-            let totalWords = List.sumWith(numberOfWords, lines);
-            println("${totalLines}  ${totalWords}  ${file}")
+    let result :Result[IOError, (Int32, Int32)] = forM (
+        lines <- Files.readLines(file)
+    ) yield  (
+        let totalLines = List.length(lines);
+        let totalWords = List.sumWith(numberOfWords, lines);
+        (totalLines, totalWords)
+    );
+    match result {
+        case Ok((lines, words)) => println("${lines}  ${words}  ${file}")
+        case Err(msg) => println(msg)
     }
+
 
 def numberOfWords(s: String): Int32 =
     s |> String.words |> List.length
