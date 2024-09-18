@@ -2,8 +2,8 @@ def main(): Unit \ IO =
     let args = Environment.getArgs();
     match args {
         case Nil => println("Missing argument: filename")
-        case file :: _ =>
-            count(file)
+        case files =>
+            List.forEach(file -> count(file), files)
     }
 
 def count(file: String) : Unit \ IO =
@@ -13,7 +13,7 @@ def count(file: String) : Unit \ IO =
         case Ok(lines) =>
             let totalLines = List.length(lines);
             let totalWords = List.sumWith(numberOfWords, lines);
-            println("Lines: ${totalLines}, Words: ${totalWords}")
+            println("${totalLines}  ${totalWords}  ${file}")
     }
 
 def numberOfWords(s: String): Int32 =
