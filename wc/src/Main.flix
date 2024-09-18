@@ -7,7 +7,7 @@ def main(): Unit \ IO =
     }
 
 def count(file: String) : Unit \ IO =
-    let result: Result[String, (Int32, Int32)] = forM (
+    let result = forM (
         lines <- Files.readLines(file) |>
                  Result.mapErr(_ -> "Unable to read: ${file}")
     ) yield  (
