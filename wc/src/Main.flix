@@ -7,8 +7,9 @@ def main(): Unit \ IO =
     }
 
 def count(file: String) : Unit \ IO =
-    let result :Result[IOError, (Int32, Int32)] = forM (
-        lines <- Files.readLines(file)
+    let result: Result[String, (Int32, Int32)] = forM (
+        lines <- Files.readLines(file) |>
+                 Result.mapErr(_ -> "Unable to read: ${file}")
     ) yield  (
         let totalLines = List.length(lines);
         let totalWords = List.sumWith(numberOfWords, lines);
@@ -18,7 +19,6 @@ def count(file: String) : Unit \ IO =
         case Ok((lines, words)) => println("${lines}  ${words}  ${file}")
         case Err(msg) => println(msg)
     }
-
 
 def numberOfWords(s: String): Int32 =
     s |> String.words |> List.length
