@@ -1,7 +1,8 @@
 // Pure sort function that uses mutation locally.
 def sort(l: List[a]): List[a] with Order[a] =
     let result = region rc {
-        let arr: Array[a, rc] = List.toArray(rc, l);
+        let rc1 = rc; // Regions are values.
+        let arr: Array[a, rc] = List.toArray(rc1, l);
         let _ : Unit = Array.sort!(arr); // I like the hat tip to Ruby/Scheme for the bang warning for mutation!
         let result: List[a] = Array.toList(arr);
         result
