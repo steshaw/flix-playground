@@ -1,8 +1,8 @@
 def runMutList(): Unit \ IO =
     region rc {
-        let fruits = MutList.empty(rc);
-        MutList.push!("Apple", fruits);
-        MutList.push!("Pear", fruits);
-        MutList.push!("Mango", fruits);
-        MutList.forEach(println, fruits)
+        let fruits = MutList.empty(rc) !>
+            MutList.push!("Apple") !>
+            MutList.push!("Pear") !>
+            MutList.push!("Mango");
+        fruits |> MutList.forEach(println)
     }
