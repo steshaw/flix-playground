@@ -8,6 +8,17 @@ def sort(l: List[a]): List[a] with Order[a] =
     };
     result
 
+def toString(xs: List[a]): String with ToString[a] =
+    region rc {
+        let sb = StringBuilder.empty(rc);
+        xs |> List.forEach(s -> StringBuilder.appendString!("${s} :: ", sb));
+        StringBuilder.appendString!("Nil", sb);
+        StringBuilder.toString(sb)
+    } // scope of rc ends, the entire expression is pure.
+
 def runRegions(): Unit \ IO =
-    println(sort(List#{5, 6, 7, 1, 2, 3}))
+    let xs = List#{5, 6, 7, 1, 2, 3};
+    let sorted = sort(xs);
+    println(sorted);
+    println(toString(sorted))
 
