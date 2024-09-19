@@ -17,6 +17,14 @@ def toString(xs: List[a]): String with ToString[a] =
         StringBuilder.toString(sb)
     } // scope of rc ends, the entire expression is pure.
 
+def tryToEscape(): Unit \ IO =
+    let r = region rc {
+        let escaped = Array#{1, 2, 3} @ rc;
+        println(Array.toList(escaped));
+        Array.toList(escaped) // Cannot return bare `escaped` here because it escapes the region `rc`.
+    };
+    println(r)
+
 def runRegions(): Unit \ IO =
     let xs = List#{5, 6, 7, 1, 2, 3};
     let sorted = sort(xs);
