@@ -20,7 +20,7 @@ def toString(xs: List[a]): String with ToString[a] =
 def tryToEscape(): Unit \ IO =
     let r = region rc {
         let escaped = Array#{1, 2, 3} @ rc;
-        println(Array.toList(escaped));
+        println(Array.toString(escaped));
         Array.toList(escaped) // Cannot return bare `escaped` here because it escapes the region `rc`.
     };
     println(r)
