@@ -24,4 +24,4 @@ def maps(): Unit \ IO =
     println(m2 |> Map.get(1)) // Alternative syntax for previous.
 
 def main(): Unit \ IO =
-    println("hi")
+    runCounter()
