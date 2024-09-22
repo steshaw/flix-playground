@@ -16,9 +16,7 @@ mod Private {
         x -> g(f(x))
 }
 
-// Doesn't compile currently.
-// def h(f: a -> b \ ef, g: b -> c \ { (not ef1) or ef2 }): Unit = ???
-
+def h(f: a -> b \ ef1, g: b -> c \ { (~ef1) + ef2 }): Unit = ???
 
 // No need to evaluate pure expressions that are ignored. Compiler says "useless
 // expression". We can "do it anyway" by using `let _ = <useless expressions>`.
